@@ -1,0 +1,39 @@
+class Solution {
+    public int subarraysWithXorK(int[] arr, int k) {
+        //Brute force
+        // int count = 0;
+        // int sum = 0;
+    
+        // for(int i = 0;i<arr.length;i++){
+        //     sum = arr[i];
+        //     if(sum == k){
+        //         count++;
+        //     }
+        //     for(int j = i+1;j<arr.length;j++){
+        //         sum^=arr[j];
+        //         if(sum == k ) count++;
+        //     }
+        // }
+        // return count;
+        int count = 0;
+        int sum = 0;
+        //hashmap to  fasten the process
+        HashMap<Integer, Integer> map = new HashMap<>();
+        //xor 0 has currently 1 count
+        map.put(0,1);
+        //go through all elements
+        for(int i = 0;i<arr.length;i++){
+           //update xor
+           sum ^= arr[i];
+           //find the xor with target
+           int target =  sum ^k;
+           //if map has that target update count
+           if(map.containsKey(target)){
+            count += map.get(target);
+           }
+           //if not add sum to map
+           map.put(sum, map.getOrDefault(sum,0)+1);
+        }
+        return count;
+    }
+}
