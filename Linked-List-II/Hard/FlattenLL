@@ -1,0 +1,57 @@
+/*Definition for singly Linked List
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode child;
+
+    ListNode() {
+        val = 0;
+        next = null;
+        child = null;
+    }
+
+    ListNode(int data1) {
+        val = data1;
+        next = null;
+        child = null;
+    }
+
+    ListNode(int data1, ListNode next1, ListNode next2) {
+        val = data1;
+        next = next1;
+        child = next2;
+    }
+}
+*/
+class Solution {
+    public ListNode flattenLinkedList(ListNode head) {
+        //list to store node values
+        ArrayList<Integer> store = new ArrayList<>();
+        //loop the ll
+        while (head != null) {
+            //store the head in temp
+            ListNode t2 = head;
+            //add the value in array and loop through the child
+            while (t2 != null) {
+                store.add(t2.val);
+                t2 = t2.child;
+            }
+            //move to next node
+            head = head.next;
+        }
+        //sort it
+        Collections.sort(store);
+        return convertArrToLinkedList(store);
+    }
+    public ListNode convertArrToLinkedList(ArrayList<Integer> arr){
+        //convert list to linked list
+        ListNode dummyNode = new ListNode(-1);
+        ListNode temp = dummyNode;
+
+        for (int val : arr) {
+            temp.child = new ListNode(val);
+            temp = temp.child;
+        }
+        return dummyNode.child;
+    }
+}
